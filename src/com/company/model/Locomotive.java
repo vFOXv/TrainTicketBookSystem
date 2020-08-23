@@ -1,6 +1,6 @@
 package com.company.model;
 
-public class Locomotive extends NamedEntiy {
+public class Locomotive extends NamedEntity {
     int capacityLocomotive;     //количество вагонов которые может тянуть локомотив
     int powerLocomotive;        //мощьность локомотива
     int yearIssueLocomotive;    //год выпуска локомотива
