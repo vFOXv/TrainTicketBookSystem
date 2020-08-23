@@ -57,7 +57,7 @@ public class PassengerWagoon {
                 '}'+"\n";
     }
 
-    enum TypeWagoon{
+    public enum TypeWagoon{
         PLATSKART,
         KYPE,
         CW
