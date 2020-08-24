@@ -1,18 +1,25 @@
 package com.company.model;
 
 public class Locomotive extends NamedEntity {
+    long id;
     int capacityLocomotive;     //количество вагонов которые может тянуть локомотив
     int powerLocomotive;        //мощьность локомотива
     int yearIssueLocomotive;    //год выпуска локомотива
     FuelType fuelType;          //тип топлива локомотива
 
-    public Locomotive(){ }
+    public Locomotive() {
+    }
 
-    public Locomotive(int capacityLocomotive, int powerLocomotive, int yearIssueLocomotive, FuelType fuelType) {
+    public Locomotive(long id, int capacityLocomotive, int powerLocomotive, int yearIssueLocomotive, FuelType fuelType) {
+        this.id = id;
         this.capacityLocomotive = capacityLocomotive;
         this.powerLocomotive = powerLocomotive;
         this.yearIssueLocomotive = yearIssueLocomotive;
         this.fuelType = fuelType;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public int getCapacityLocomotive() {
@@ -50,14 +57,15 @@ public class Locomotive extends NamedEntity {
     @Override
     public String toString() {
         return "Locomotive{" +
-                "capacityLocomotive=" + capacityLocomotive +
+                "id=" + id +
+                ", capacityLocomotive=" + capacityLocomotive +
                 ", powerLocomotive=" + powerLocomotive +
                 ", yearIssueLocomotive=" + yearIssueLocomotive +
                 ", fuelType=" + fuelType +
                 '}'+"\n";
     }
 
-    public enum FuelType{
+    public enum FuelType {
         DIESEL,
         ELECTRICITY
     }
