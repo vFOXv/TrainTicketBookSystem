@@ -49,6 +49,14 @@ public class Locomotive extends NamedEntity {
         this.fuelType = fuelType;
     }
 
+    public void setFuelType(String fuelType) {
+        if(fuelType.equalsIgnoreCase("DIESEL")){
+            this.fuelType = FuelType.DIESEL;
+        }else if(fuelType.equalsIgnoreCase("ELECTRICITY")){
+            this.fuelType = FuelType.ELECTRICITY;
+        }
+    }
+
     @Override
     public String toString() {
         return "Locomotive{" +
@@ -58,6 +66,8 @@ public class Locomotive extends NamedEntity {
                 ", fuelType=" + fuelType +
                 '}'+"\n";
     }
+
+
 
     public enum FuelType {
         DIESEL,
