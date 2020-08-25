@@ -1,7 +1,7 @@
 package com.company.model;
 
 //Клас багаж
-public class Cargo {
+public class Cargo extends NamedEntity {
     private String typeCargo;   // тип вантажу
     private double weightCargo;  // вага вантажу
     private double volumeCargo;  // обєм вантажу

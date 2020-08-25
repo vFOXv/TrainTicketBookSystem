@@ -1,7 +1,6 @@
 package com.company.model;
 
 public class PassengerWagoon {
-    long id;
     TypeWagoon typeWagoon;  //тип вагона
     int numberWagoon;       //номер вагина
     int amountSeats;        //колличество мест в вагоне
@@ -9,21 +8,14 @@ public class PassengerWagoon {
 
     public PassengerWagoon(){  }
 
-    public PassengerWagoon(long id, TypeWagoon typeWagoon, int numberWagoon, int amountSeats, int numberSeats) {
-        this.id = id;
+    public PassengerWagoon(TypeWagoon typeWagoon, int numberWagoon, int amountSeats, int numberSeats) {
         this.typeWagoon = typeWagoon;
         this.numberWagoon = numberWagoon;
         this.amountSeats = amountSeats;
         this.numberSeats = numberSeats;
     }
 
-    public long getId() {
-        return id;
-    }
 
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public TypeWagoon getTypeWagoon() {
         return typeWagoon;
@@ -60,7 +52,6 @@ public class PassengerWagoon {
     @Override
     public String toString() {
         return "PassengerWagoon{" +
-                "id=" + id +
                 ", typeWagoon=" + typeWagoon +
                 ", numberWagoon=" + numberWagoon +
                 ", amountSeats=" + amountSeats +
