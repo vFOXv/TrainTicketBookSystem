@@ -1,6 +1,6 @@
-package model;
+package com.company.java.model;
 
-import model.BaseEntity;
+//import model.BaseEntity;
 
 /**
  @author Evgeniy Lukashik

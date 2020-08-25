@@ -1,4 +1,4 @@
-package model;
+package com.company.java.model;
 
 public class Passenger extends BaseEntity {
     String firstNamePassenger; // имя пассажира

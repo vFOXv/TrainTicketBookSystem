@@ -1,7 +1,8 @@
-package dao;
+package com.company.java.dao;
 
 import com.company.java.dao.GenericDAO;
-import model.Locomotive;
+import com.company.java.model.Locomotive;
+
 
 import java.io.BufferedReader;
 import java.io.FileReader;
