@@ -1,4 +1,4 @@
-package com.company.model;
+package model;
 
 public class Locomotive extends NamedEntity {
     int capacityLocomotive;     //количество вагонов которые может тянуть локомотив

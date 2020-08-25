@@ -1,6 +1,6 @@
-package com.company.model;
+package model;
 
-public class Passenger {
+public class Passenger extends BaseEntity {
     String firstNamePassenger; // имя пассажира
     String secondNamePassenger; // фамилия пассажира
     Long idTicket; // id билета

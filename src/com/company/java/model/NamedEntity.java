@@ -1,4 +1,7 @@
-package com.company.model;
+package model;
+
+import model.BaseEntity;
+
 /**
  @author Evgeniy Lukashik
  */

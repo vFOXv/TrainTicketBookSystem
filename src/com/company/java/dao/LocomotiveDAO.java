@@ -1,17 +1,14 @@
-package com.company.dao;
+package dao;
 
-import com.company.model.Locomotive;
+import com.company.java.dao.GenericDAO;
+import model.Locomotive;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
 
 public class LocomotiveDAO implements GenericDAO<Locomotive> {
-    String filePath = "src/resources/database_test/locomotive.txt";
+    String filePath = "src/com/resources/database_test/locomotive.txt";
 
     @Override
     public Locomotive getEntityById(Long id) {

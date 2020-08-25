@@ -1,4 +1,6 @@
-package com.company.model;
+package model;
+
+import com.company.java.model.NamedEntity;
 
 //Клас багаж
 public class Cargo extends NamedEntity {
