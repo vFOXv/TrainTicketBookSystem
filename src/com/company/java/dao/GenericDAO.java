@@ -1,4 +1,4 @@
-package com.company.dao;
+package com.company.java.dao;
 
 
 

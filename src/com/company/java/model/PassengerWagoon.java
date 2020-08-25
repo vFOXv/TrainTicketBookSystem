@@ -1,4 +1,4 @@
-package com.company.model;
+package model;
 
 public class PassengerWagoon {
     TypeWagoon typeWagoon;  //тип вагона
