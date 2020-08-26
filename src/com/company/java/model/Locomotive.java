@@ -59,18 +59,27 @@ public class Locomotive extends NamedEntity {
 
     @Override
     public String toString() {
-        return "Locomotive{" +
-                ", capacityLocomotive=" + capacityLocomotive +
-                ", powerLocomotive=" + powerLocomotive +
-                ", yearIssueLocomotive=" + yearIssueLocomotive +
-                ", fuelType=" + fuelType +
-                '}'+"\n";
+        return "№ поезда : " + getId() + " ; Название поезда: "+ getName() +
+                " ; кол-во вагонов : " + capacityLocomotive + " шт " +
+                "; мощность : " + powerLocomotive + " кВт " +
+                "; год выпуска : " + yearIssueLocomotive + " г " +
+                "; вид топлива : " + fuelType.getString() + ".\n";
     }
 
 
 
     public enum FuelType {
-        DIESEL,
-        ELECTRICITY
+        DIESEL("ДИЗЕЛЬНАЯ ТЯГА"),
+        ELECTRICITY("ЭЛЕТРОТЯГА");
+
+        String string;
+
+        FuelType(String string) {
+            this.string = string;
+        }
+
+        public String getString() {
+            return string;
+        }
     }
 }
