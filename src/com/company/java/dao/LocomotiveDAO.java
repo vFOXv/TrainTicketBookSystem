@@ -3,9 +3,7 @@ package dao;
 import com.company.java.dao.GenericDAO;
 import model.Locomotive;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 public class LocomotiveDAO implements GenericDAO<Locomotive> {
     String filePath = "src/com/resources/database_test/locomotive.txt";
@@ -41,7 +39,52 @@ public class LocomotiveDAO implements GenericDAO<Locomotive> {
 
 
     @Override
-    public void saveEntity(Locomotive entity) {
+    public void saveEntity(Locomotive locomotive) {
+        Locomotive existLocomotive = getEntityById(locomotive.getId());
+
+        if (locomotive.getId().equals(existLocomotive.getId())) {
+            System.out.println("Locomotive with such id is already existing");
+        } else {
+            try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath))) {
+                StringBuffer existFiles = new StringBuffer();
+                String read = null;
+                while ((read = bufferedReader.readLine()) != null) {
+                    existFiles.append(read);
+                }
+                String[] fileDataList = existFiles.toString().split("/");
+
+
+                String locomotiveToString = locomotive.getId() + ","
+                        + locomotive.getName() + ","
+                        + locomotive.getCapacityLocomotive() + ","
+                        + locomotive.getPowerLocomotive() + ","
+                        + locomotive.getYearIssueLocomotive() + ","
+                        + locomotive.getFuelType() +"/";
+
+                String newFile = "";
+                if (existFiles.toString().equals("")) {
+                    newFile = existFiles.append(locomotiveToString).toString();
+                } else {
+                    for (String s : fileDataList) {
+                        newFile += s;
+                        newFile += "/";
+                        newFile += "\n";
+
+                    }
+                    newFile += locomotiveToString;
+                }
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+                    writer.write(newFile);
+                } catch (IOException e) {
+                    e.printStackTrace();
+
+                }
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
     }
 
