@@ -1,10 +1,4 @@
-package com.company.java.dao;
-
-import com.company.java.model.Locomotive;
-import com.company.java.model.Passenger;
-
-import java.io.*;
-import java.util.ArrayList;
+package dao;
 
 public class PassengerDAO implements GenericDAO<Passenger> {
     String filePath = "src/com/resources/database_test/Passenger.txt";
