@@ -13,7 +13,7 @@ public class Run {
         //locomotiveDAO.removeEntity(locomotive1);
 //        locomotiveDAO.saveEntity(locomotive2);
 
-        // index = list.indexOf(entity); не работает в ПассажитеДао  :(((
+        // index = list.indexOf(entity); не работает в ПассажиреДао  :(((
         Passenger passenger1 = new Passenger("FName_1", "SName_1", 1L);
         Passenger passenger2 = new Passenger("FName_2", "SName_2", 2L);
         Passenger passenger3 = new Passenger("FName_3", "SName_3", 3L);
