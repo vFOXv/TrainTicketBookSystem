@@ -1,4 +1,4 @@
-package com.company.java.model;
+package model;
 
 //import model.BaseEntity;
 

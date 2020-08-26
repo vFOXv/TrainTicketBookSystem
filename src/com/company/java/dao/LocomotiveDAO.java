@@ -1,8 +1,7 @@
-package com.company.java.dao;
+package dao;
 
-import com.company.java.dao.GenericDAO;
-import com.company.java.model.Locomotive;
-
+import dao.GenericDAO;
+import model.Locomotive;
 
 import java.io.*;
 

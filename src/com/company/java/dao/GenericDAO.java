@@ -1,6 +1,4 @@
-package com.company.java.dao;
-
-
+package dao;
 
 
 /**
