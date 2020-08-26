@@ -1,4 +1,4 @@
-package model;
+package com.company.java.model;
 
 import com.company.java.model.NamedEntity;
 
