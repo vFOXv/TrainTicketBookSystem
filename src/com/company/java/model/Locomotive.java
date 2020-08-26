@@ -9,13 +9,24 @@ public class Locomotive extends NamedEntity {
     public Locomotive() {
     }
 
-    public Locomotive(int capacityLocomotive, int powerLocomotive, int yearIssueLocomotive, FuelType fuelType) {
+    public Locomotive(Long id, String name, int capacityLocomotive, int powerLocomotive, int yearIssueLocomotive, FuelType fuelType) {
+        super(id, name);
         this.capacityLocomotive = capacityLocomotive;
         this.powerLocomotive = powerLocomotive;
         this.yearIssueLocomotive = yearIssueLocomotive;
         this.fuelType = fuelType;
     }
-
+    public Locomotive(Long id, String name, int capacityLocomotive, int powerLocomotive, int yearIssueLocomotive, String fuelType) {
+        super(id, name);
+        this.capacityLocomotive = capacityLocomotive;
+        this.powerLocomotive = powerLocomotive;
+        this.yearIssueLocomotive = yearIssueLocomotive;
+        if(fuelType.equalsIgnoreCase("DIESEL")){
+            this.fuelType = FuelType.DIESEL;
+        }else if(fuelType.equalsIgnoreCase("ELECTRICITY")){
+            this.fuelType = FuelType.ELECTRICITY;
+        }
+    }
 
     public int getCapacityLocomotive() {
         return capacityLocomotive;
@@ -49,7 +60,9 @@ public class Locomotive extends NamedEntity {
         this.fuelType = fuelType;
     }
 
-    public void setFuelType(String fuelType) {
+
+
+    public void setFuelType(String fuelType){
         if(fuelType.equalsIgnoreCase("DIESEL")){
             this.fuelType = FuelType.DIESEL;
         }else if(fuelType.equalsIgnoreCase("ELECTRICITY")){
@@ -60,6 +73,7 @@ public class Locomotive extends NamedEntity {
     @Override
     public String toString() {
         return "Locomotive{" +
+                super.toString() +
                 ", capacityLocomotive=" + capacityLocomotive +
                 ", powerLocomotive=" + powerLocomotive +
                 ", yearIssueLocomotive=" + yearIssueLocomotive +
@@ -70,7 +84,17 @@ public class Locomotive extends NamedEntity {
 
 
     public enum FuelType {
-        DIESEL,
-        ELECTRICITY
+        DIESEL("diesel"),
+        ELECTRICITY("electricity");
+
+        String str;
+
+        FuelType(String str){
+            this.str = str;
+        }
+
+        public String getStr() {
+            return str;
+        }
     }
 }

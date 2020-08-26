@@ -15,6 +15,11 @@ public class NamedEntity extends BaseEntity {
         this.name = name;
     }
 
+    public NamedEntity(Long id, String name) {
+        super(id);
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }
@@ -26,7 +31,7 @@ public class NamedEntity extends BaseEntity {
     @Override
     public String toString() {
         return "NamedEntity{" +
-                "Id: " + super.getId() +
-                "Name: " + name;
+                " Id: " + super.getId() +
+                " Name: " + name;
     }
 }
