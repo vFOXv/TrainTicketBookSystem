@@ -58,12 +58,13 @@ public class PassengerDAO implements GenericDAO<Passenger> {
     public void removeEntity(Passenger passenger) {
 
         long id = passenger.getIdTicket();
-        String FName = passenger.getFirstNamePassenger();
-        String SName = passenger.getSecondNamePassenger();
+
         String[] splitedLine = null;
         //List для хранения списка обьектов пассажиров из файла
         ArrayList<Passenger> list = new ArrayList<>();
         int index = 0;
+
+
         //получение списка пассажиров из файла
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String read = null;
@@ -80,7 +81,7 @@ public class PassengerDAO implements GenericDAO<Passenger> {
         //index = list.indexOf(entity);
 
         for (int i = 0; i < list.size(); i++) {
-            if (id == list.get(i).getIdTicket()/*&& FName.equalsIgnoreCase(list.get(i).getFirstNamePassenger())&&SName.equalsIgnoreCase(list.get(i).getSecondNamePassenger())*/) {
+            if (id == list.get(i).getIdTicket()){
                 index = i;
                 break;
             }
@@ -91,10 +92,10 @@ public class PassengerDAO implements GenericDAO<Passenger> {
 
         //запись List с удалленым объектом обратно в файл
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, false))) {
-        for (int i = 0; i < list.size(); i++) {
-            String passengerToString = list.get(i).getFirstNamePassenger() + ","
-                    + list.get(i).getSecondNamePassenger() + ","
-                    + list.get(i).getIdTicket() + "\n";
+            for (Passenger value : list) {
+                String passengerToString = value.getFirstNamePassenger() + ","
+                        + value.getSecondNamePassenger() + ","
+                        + value.getIdTicket() + "\n";
                 writer.write(passengerToString);
             }
         } catch (IOException e) {
