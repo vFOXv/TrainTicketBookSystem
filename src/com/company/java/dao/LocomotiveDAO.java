@@ -1,9 +1,11 @@
 package dao;
 
 import model.Locomotive;
+import model.Passenger;
 
 import java.io.*;
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,6 +15,7 @@ import java.util.stream.Collectors;
 //        (для каждой сущности создается свой файл прим. locomotive.txt).
 //        Пример метода getEntityById смотрите в классе LocomotiveDAO.
 
+
 public class LocomotiveDAO implements GenericDAO<Locomotive> {
 
     String filePath = "src/com/resources/database_test/locomotive.txt";
@@ -20,6 +23,7 @@ public class LocomotiveDAO implements GenericDAO<Locomotive> {
     @Override
     public Locomotive getEntityById(Long id) {
         Locomotive locomotive = new Locomotive();
+
         try(BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String read;
             while ((read = reader.readLine()) != null) {
@@ -35,20 +39,23 @@ public class LocomotiveDAO implements GenericDAO<Locomotive> {
                         locomotive.setYearIssueLocomotive(Integer.parseInt(splitedLine[4]));
                         locomotive.setFuelType(splitedLine[5]);
                     }
+
             }
         } catch (IOException e) {
             e.printStackTrace();
-
         }
+
         return locomotive;
     }
 
 
     @Override
-    public void saveEntity(Locomotive entity) {
+public void saveEntity(Locomotive entity) {
         try(BufferedWriter bw = new BufferedWriter( new FileWriter(filePath,true))) {
 
+
                 // форматируем параметры нашего объекта в массив и по элементно записываем в наш файл
+
 
                 String[] train = new String[]{String.valueOf(entity.getId()), entity.getName(),
                         String.valueOf(entity.getCapacityLocomotive()), String.valueOf(entity.getPowerLocomotive()),
@@ -70,6 +77,7 @@ public class LocomotiveDAO implements GenericDAO<Locomotive> {
     public void updateEntity(Locomotive entity) {
 
         // строки файла как отдельные объекты записываем в ArrayList
+
 
             List<Locomotive> locomotiveList= new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))){
@@ -111,6 +119,7 @@ public class LocomotiveDAO implements GenericDAO<Locomotive> {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
             locomotiveList.forEach(this::saveEntity);
         }
 
@@ -134,9 +143,11 @@ public class LocomotiveDAO implements GenericDAO<Locomotive> {
                     locomotive.setFuelType(splitedLine[5]);
                     locomotiveList.add(locomotive);
                 }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+
 
             // находим из списка объектов тот, который соответствует нашему, переданному метоу в параметрах
 
@@ -154,6 +165,7 @@ public class LocomotiveDAO implements GenericDAO<Locomotive> {
                 e.printStackTrace();
             }
             locomotiveList.forEach(this::saveEntity);
+
         }
     }
     // Метод возвращающий объект сканера
