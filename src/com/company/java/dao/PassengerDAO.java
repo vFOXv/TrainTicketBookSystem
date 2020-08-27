@@ -14,16 +14,13 @@ public class PassengerDAO implements GenericDAO<Passenger> {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String read = null;
             while ((read = reader.readLine()) != null) {
-                String[] splitedFile = read.split("/");
-                for (String line : splitedFile) {
-                    String[] splitedLine = line.split(",");
-                    Long firstLong = Long.parseLong(splitedLine[2]);
+                String[] splitedLine = read.split(",");
+                Long firstLong = Long.parseLong(splitedLine[2]);
 
-                    if (firstLong.equals(id)) {
-                        passenger.setFirstNamePassenger(splitedLine[0]);
-                        passenger.setSecondNamePassenger(splitedLine[1]);
-                        passenger.setIdTicket(firstLong);
-                    }
+                if (firstLong.equals(id)) {
+                    passenger.setFirstNamePassenger(splitedLine[0]);
+                    passenger.setSecondNamePassenger(splitedLine[1]);
+                    passenger.setIdTicket(firstLong);
                 }
             }
         } catch (IOException e) {
@@ -33,12 +30,20 @@ public class PassengerDAO implements GenericDAO<Passenger> {
     }
 
     @Override
-    public void saveEntity(Passenger entity) {
-        String content = entity.toString();
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
-            writer.write(content);
-        } catch (IOException e) {
-            e.printStackTrace();
+    public void saveEntity(Passenger passenger) {
+        Passenger existPassenger = getEntityById(passenger.getIdTicket());
+
+        if (passenger.getIdTicket().equals(existPassenger.getIdTicket())) {
+            System.out.println("Passenger with such id = " + passenger.getIdTicket() + " is already existing");
+        } else {
+            String passengerToString = passenger.getFirstNamePassenger() + ","
+                    + passenger.getSecondNamePassenger() + ","
+                    + passenger.getIdTicket() + "\n";
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
+                writer.write(passengerToString);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -50,21 +55,23 @@ public class PassengerDAO implements GenericDAO<Passenger> {
     }
 
     @Override
-    public void removeEntity(Passenger entity) {
+    public void removeEntity(Passenger passenger) {
 
-        long id = entity.getIdTicket();
+        long id = passenger.getIdTicket();
+        String FName = passenger.getFirstNamePassenger();
+        String SName = passenger.getSecondNamePassenger();
         String[] splitedLine = null;
         //List для хранения списка обьектов пассажиров из файла
         ArrayList<Passenger> list = new ArrayList<>();
         int index = 0;
         //получение списка пассажиров из файла
-        try(BufferedReader reader = new BufferedReader(new FileReader(filePath))){
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String read = null;
-            while((read = reader.readLine()) != null){
+            while ((read = reader.readLine()) != null) {
                 splitedLine = read.split(",");
-                list.add(new Passenger(splitedLine[0],splitedLine[1],Long.parseLong(splitedLine[2])));
+                list.add(new Passenger(splitedLine[0], splitedLine[1], Long.parseLong(splitedLine[2])));
             }
-        }catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -72,24 +79,26 @@ public class PassengerDAO implements GenericDAO<Passenger> {
 
         //index = list.indexOf(entity);
 
-        for (int i = 0; i <list.size() ; i++) {
-           if (id == list.get(i).getIdTicket()){
-               index = list.indexOf(entity);
-           }
-           break;
+        for (int i = 0; i < list.size(); i++) {
+            if (id == list.get(i).getIdTicket()/*&& FName.equalsIgnoreCase(list.get(i).getFirstNamePassenger())&&SName.equalsIgnoreCase(list.get(i).getSecondNamePassenger())*/) {
+                index = i;
+                break;
+            }
         }
 
         //удаление объекта
         list.remove(index);
 
         //запись List с удалленым объектом обратно в файл
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, false))) {
         for (int i = 0; i < list.size(); i++) {
-            String content = list.get(i).toString();
-            try(BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, false))){
-                writer.write(content);
-            }catch(IOException e){
-                e.printStackTrace();
+            String passengerToString = list.get(i).getFirstNamePassenger() + ","
+                    + list.get(i).getSecondNamePassenger() + ","
+                    + list.get(i).getIdTicket() + "\n";
+                writer.write(passengerToString);
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
