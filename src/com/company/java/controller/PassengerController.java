@@ -20,7 +20,7 @@ public class PassengerController {
     }
 
 
-    public Passenger getBId(Long id){
+    public Passenger getById(Long id){
         return passengerDAO.getEntityById(id);
     }
 
