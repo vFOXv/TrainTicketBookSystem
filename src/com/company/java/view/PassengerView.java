@@ -26,11 +26,6 @@ public class PassengerView {
                 case 1:
                     createPassengerMenu();
                     break;
-                case 2:
-                    //findPassengerMenu();
-                case 3:
-                    //getAllPassengers();
-
             }
         }
     }
