@@ -2,6 +2,7 @@ import dao.LocomotiveDAO;
 import dao.PassengerDAO;
 import model.Locomotive;
 import model.Passenger;
+import view.PassengerView;
 
 public class Run {
     public static void main(String[] args) {
@@ -17,15 +18,19 @@ public class Run {
         Passenger passenger1 = new Passenger("FName_1", "SName_1", 1L);
         Passenger passenger2 = new Passenger("FName_2", "SName_2", 2L);
         Passenger passenger3 = new Passenger("FName_3", "SName_3", 3L);
-        Passenger passenger3_4 = new Passenger("FName_3/4", "SName_3/4", 3L);
+//        Passenger passenger3_4 = new Passenger("FName_3/4", "SName_3/4", 3L);
         PassengerDAO passengerDAO = new PassengerDAO();
         passengerDAO.saveEntity(passenger1);
         passengerDAO.saveEntity(passenger2);
         passengerDAO.saveEntity(passenger3);
-        passengerDAO.removeEntity(passenger3);
-        System.out.println(passengerDAO.getEntityById(1L).toString());
-        passengerDAO.updateEntity(passenger3_4);
+//        passengerDAO.removeEntity(passenger3);
+//        System.out.println(passengerDAO.getEntityById(1L).toString());
+//        passengerDAO.updateEntity(passenger3_4);
 
+
+        //PassengerView строка 47 и 52 если sout перенести внутрь цикла, происходит удвоение sout. Почему????
+        PassengerView passengerView = new PassengerView();
+        passengerView.showPassengerMenu();
 
     }
 }
