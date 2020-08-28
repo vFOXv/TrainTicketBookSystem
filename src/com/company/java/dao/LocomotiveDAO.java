@@ -6,29 +6,40 @@ import model.Passenger;
 import java.io.*;
 import java.util.ArrayList;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+
+//        Реализовать методы из интерфейса GenericDAO. Данные должны хранится
+//        в файле который расположен в дирректории "com.resources.database_test"
+//        (для каждой сущности создается свой файл прим. locomotive.txt).
+//        Пример метода getEntityById смотрите в классе LocomotiveDAO.
+
+
 public class LocomotiveDAO implements GenericDAO<Locomotive> {
+
     String filePath = "src/com/resources/database_test/locomotive.txt";
 
     @Override
     public Locomotive getEntityById(Long id) {
         Locomotive locomotive = new Locomotive();
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String read = null;
+
+        try(BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String read;
             while ((read = reader.readLine()) != null) {
-                //String[] splitedFile = read.split("/");
-                //for (String line : read) {
-                String[] splitedLine = read.split(",");
+                    String[] splitedLine = read.split(",");
 
-                Long firstLong = Long.parseLong(splitedLine[0]);
+                    Long firstLong = Long.parseLong(splitedLine[0]);
 
-                if (firstLong.equals(id)) {
-                    locomotive.setId(firstLong);
-                    locomotive.setName(splitedLine[1]);
-                    locomotive.setCapacityLocomotive(Integer.parseInt(splitedLine[2]));
-                    locomotive.setPowerLocomotive(Integer.parseInt(splitedLine[3]));
-                    locomotive.setYearIssueLocomotive(Integer.parseInt(splitedLine[4]));
-                    locomotive.setFuelType(splitedLine[5]);
-                }
+                    if (firstLong.equals(id)) {
+                        locomotive.setId(firstLong);
+                        locomotive.setName(splitedLine[1]);
+                        locomotive.setCapacityLocomotive(Integer.parseInt(splitedLine[2]));
+                        locomotive.setPowerLocomotive(Integer.parseInt(splitedLine[3]));
+                        locomotive.setYearIssueLocomotive(Integer.parseInt(splitedLine[4]));
+                        locomotive.setFuelType(splitedLine[5]);
+                    }
+
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -39,127 +50,223 @@ public class LocomotiveDAO implements GenericDAO<Locomotive> {
 
 
     @Override
-    public void saveEntity(Locomotive locomotive) {
-        Locomotive existLocomotive = getEntityById(locomotive.getId());
-
-        if (locomotive.getId().equals(existLocomotive.getId())) {
-            System.out.println("Locomotive with such id = " + locomotive.getId() + " is already existing");
-        } else {
-            try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath))) {
-                StringBuffer existFiles = new StringBuffer();
-                String read = null;
-                while ((read = bufferedReader.readLine()) != null) {
-                    existFiles.append(read + "\n");
-                }
-                //String[] fileDataList = existFiles.toString().split("/");
-
-                String str = existFiles.toString();
-                System.out.println(str);
-                String[] split = str.split("\n");
+public void saveEntity(Locomotive entity) {
+        try(BufferedWriter bw = new BufferedWriter( new FileWriter(filePath,true))) {
 
 
-
-                String locomotiveToString = locomotive.getId() + ","
-                        + locomotive.getName() + ","
-                        + locomotive.getCapacityLocomotive() + ","
-                        + locomotive.getPowerLocomotive() + ","
-                        + locomotive.getYearIssueLocomotive() + ","
-                        + locomotive.getFuelType() + "\n";
-//                String newFile = "";
-//                if (existFiles.toString().equals("")) {
-//                    newFile = existFiles.append(locomotiveToString).toString();
-//                } else {
-//                    for (String s : fileDataList) {
-//                        newFile += s;
-//                        newFile += "/";
-//                        newFile += "\n";
-//
-//                    }
-//                    newFile += locomotiveToString;
-//                }
-                try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
-                    writer.write(locomotiveToString);
-                } catch (IOException e) {
-                    e.printStackTrace();
-
-                }
+                // форматируем параметры нашего объекта в массив и по элементно записываем в наш файл
 
 
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
+                String[] train = new String[]{String.valueOf(entity.getId()), entity.getName(),
+                        String.valueOf(entity.getCapacityLocomotive()), String.valueOf(entity.getPowerLocomotive()),
+                        String.valueOf(entity.getYearIssueLocomotive()), String.valueOf(entity.getFuelType())};
+                for (int i = 0; i < train.length; i++) {
+                        if (i != train.length - 1) {
+                            bw.write(train[i]);
+                            bw.write(",");
+                        } else {
+                            bw.write(train[i] + "\n");
+                        }
+                    }
+            } catch (IOException e){
+            e.getStackTrace();
         }
     }
-    @Override
-    public void updateEntity(Locomotive locomotive) {
-        removeEntity(locomotive);
-        saveEntity(locomotive);
-    }
 
     @Override
-    public void removeEntity(Locomotive locomotive) {
-//        try(BufferedReader reader = new BufferedReader(new FileReader(filePath))){
-//            String read = null;
-//            while((read = reader.readLine()) != null){
-//                String[]splitedLine = read.split(",");
-//                Long idLong  = Long.parseLong(splitedLine[0]);
-//
-//                if(idLong.equals(locomotive.getId())){
-//                    try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(filePath))){
-//                        bufferedWriter.write("");
-//                    }
-//                }
-//            }
-//        }catch(IOException e){
-//            e.printStackTrace();
-//        }
-        long id = locomotive.getId();
-        String[] splitedLine = null;
-        //List для хранения списка обьектов пассажиров из файла
-        ArrayList<Locomotive> list = new ArrayList<>();
-        int index = 0;
-        //получение списка пассажиров из файла
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String read = null;
-            while ((read = reader.readLine()) != null) {
-                splitedLine = read.split(",");
-                Locomotive locomotiveToString = new Locomotive(Long.parseLong(splitedLine[0]),
-                        splitedLine[1],
-                        Integer.parseInt(splitedLine[2]),
-                        Integer.parseInt(splitedLine[3]),
-                        Integer.parseInt(splitedLine[4]),
-                        splitedLine[5]);
-                list.add(locomotiveToString);
+    public void updateEntity(Locomotive entity) {
+
+        // строки файла как отдельные объекты записываем в ArrayList
+
+
+            List<Locomotive> locomotiveList= new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))){
+            String read;
+            while ((read = br.readLine()) != null)  {
+                    String[] splitedLine = read.split(",");
+                    Locomotive locomotive = new Locomotive();
+                    locomotive.setId(Long.parseLong(splitedLine[0]));
+                    locomotive.setName(splitedLine[1]);
+                    locomotive.setCapacityLocomotive(Integer.parseInt(splitedLine[2]));
+                    locomotive.setPowerLocomotive(Integer.parseInt(splitedLine[3]));
+                    locomotive.setYearIssueLocomotive(Integer.parseInt(splitedLine[4]));
+                    locomotive.setFuelType(splitedLine[5]);
+                    locomotiveList.add(locomotive);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        //получение индекса удаляемого объекта - сложности для того,
-        // что бы этот метод можно было использовать в updateEntity
+            // находим из списка объектов тот, который соответствует нашему, переданному методу в параметрах
 
-        //index = list.indexOf(locomotive.toString());
+            Locomotive locomotive = locomotiveList.stream()
+                    .filter(loc -> loc.getId().equals(entity.getId()))
+                    .collect(Collectors.toList()).get(0);
 
-        for (int i = 0; i < list.size(); i++) {
-            if (id == list.get(i).getId())
-                index = list.indexOf(locomotive);
-            break;
-        }
+            // удаляем объект, переданного в качестве параметра методу, из списка объектов из файла
 
-        //удаление объекта
-        System.out.println(index);
-        list.remove(index);
+            while(locomotiveList.contains(locomotive)) {
+            locomotiveList.remove(locomotive);
+            }
+            // записываем объект с измененными параметрами в список
 
-        //запись List с удалленым объектом обратно в файл
-        for (int i = 0; i < list.size(); i++) {
-            String content = list.get(i).toString();
-            System.out.println(content);
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
-                writer.write(content);
+            locomotiveList.add(entity);
+
+            // Стираем данные в файле и перезаписываем заново с учетом внесенных изменений в объектах Locomotive
+
+            try(BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))){
+                bw.write("");
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+            locomotiveList.forEach(this::saveEntity);
+        }
+
+    @Override
+    public void removeEntity(Locomotive entity) {
+
+
+        // выполняем проверку наличия в нашем файле объекта, идентичного объекту, переданному метоу в параметрах
+
+        List<Locomotive> locomotiveList= new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))){
+            String read;
+            while ((read = br.readLine()) != null)  {
+                    String[] splitedLine = read.split(",");
+                    Locomotive locomotive = new Locomotive();
+                    locomotive.setId(Long.parseLong(splitedLine[0]));
+                    locomotive.setName(splitedLine[1]);
+                    locomotive.setCapacityLocomotive(Integer.parseInt(splitedLine[2]));
+                    locomotive.setPowerLocomotive(Integer.parseInt(splitedLine[3]));
+                    locomotive.setYearIssueLocomotive(Integer.parseInt(splitedLine[4]));
+                    locomotive.setFuelType(splitedLine[5]);
+                    locomotiveList.add(locomotive);
+                }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+            // находим из списка объектов тот, который соответствует нашему, переданному метоу в параметрах
+
+            Locomotive locomotive = locomotiveList.stream().filter(loc -> loc.getId().equals(entity.getId()))
+                    .collect(Collectors.toList()).get(0);
+            // проводим удаление объекта, идентичного объекту, переданному метоу в параметрах
+
+            locomotiveList.remove(locomotive);
+
+            // Стираем данные в файле и перезаписываем заново с учетом внесенных изменений в объектах Locomotive
+
+            try(BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))){
+                bw.write("");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            locomotiveList.forEach(this::saveEntity);
+
         }
     }
-}
+    // Метод возвращающий объект сканера
+
+//    public Scanner scanner(){
+//        return new Scanner(System.in);
+//    }
+
+    // Метод, который заполняет поле ID поезда, если при создании обхекта поезда он не был задан
+
+//    public void setItemID(Locomotive entity){
+//        while (true){
+//            Scanner scanner = scanner();
+//            System.out.println("Задайте ID поезда :");
+//            if(scanner.hasNextLong()){
+//                entity.setId(scanner.nextLong());
+//                System.out.println("ID поезда = " + entity.getId());
+//                break;
+//            } else {
+//                System.out.println("Не верно. Попробуйте снова");
+//            }
+//        }
+//    }
+
+    // Метод, который заполняет поле Name поезда, если при создании объекта поезда оно не было задано
+
+//    public void setItemName(Locomotive entity){
+//        while (true){
+//            Scanner scanner = scanner();
+//            System.out.println("Задайте НАЗВАНИЕ поезда :");
+//            if(scanner.hasNextLine()){
+//                entity.setName(scanner.nextLine());
+//                System.out.println("Название поезда = " + entity.getName());
+//                break;
+//            } else {
+//                System.out.println("Не верно. Попробуйте снова");
+//            }
+//        }
+//    }
+
+    // Метод, который проводит проверку записей в файле на идентичность объекту, переданному методу в качестве
+    // параметра. Если этот объект есть в файле, то он выдает список всех объектов из файла, если нет - возвращает
+    // null
+
+//    public List<Locomotive> chekID(Locomotive entity){
+//        List<Locomotive> locomotiveList= new ArrayList<>();
+//        try (BufferedReader br = new BufferedReader(new FileReader(filePath))){
+//            String read;
+//            while ((read = br.readLine()) != null)  {
+//                String[] splitedFile = read.split("/");
+//                for (String line : splitedFile) {
+//                    String[] splitedLine = line.split(",");
+//                    Locomotive locomotive = new Locomotive();
+//                    locomotive.setId(Long.parseLong(splitedLine[0]));
+//                    locomotive.setName(splitedLine[1]);
+//                    locomotive.setCapacityLocomotive(Integer.parseInt(splitedLine[2]));
+//                    locomotive.setPowerLocomotive(Integer.parseInt(splitedLine[3]));
+//                    locomotive.setYearIssueLocomotive(Integer.parseInt(splitedLine[4]));
+//                    locomotive.setFuelType(splitedLine[5]);
+//                    locomotiveList.add(locomotive);
+//                }
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        if(locomotiveList.stream().anyMatch(loc -> loc.getId().equals(entity.getId()))){
+//            return locomotiveList;
+//        } else {
+//            return null;
+//        }
+//    }
+
+
+//class Run {
+//    public static void main(String[] args) {
+//        LocomotiveDAO locomotiveDAO = new LocomotiveDAO();
+//
+//        Locomotive locomotive = new Locomotive(10,120,
+//                1978, Locomotive.FuelType.DIESEL);
+//        locomotive.setId(1L);
+//        locomotive.setName("train1");
+//
+//        locomotiveDAO.saveEntity(locomotive);
+//
+//        Locomotive locomotive1 = new Locomotive(10,120,
+//                1978, Locomotive.FuelType.DIESEL);
+//        locomotive1.setId(2L);
+//        locomotive1.setName("train2");
+//
+//        locomotiveDAO.saveEntity(locomotive1);
+//
+//        System.out.println(locomotiveDAO.getEntityById(1L).toString());
+//        System.out.println(locomotiveDAO.getEntityById(2L).toString());
+//
+//        locomotiveDAO.removeEntity(locomotive1);
+//
+//        locomotive.setName("train4");
+//
+//        System.out.println(locomotive.toString());
+//
+//        locomotiveDAO.updateEntity(locomotive);
+//
+//    }
+//}
