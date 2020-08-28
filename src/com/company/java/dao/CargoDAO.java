@@ -1,14 +1,11 @@
 package dao;
 
 import model.Cargo;
-import model.Locomotive;
-
 import java.lang.*;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import java.util.stream.Collectors;
 
 
@@ -30,9 +27,9 @@ public class CargoDAO implements GenericDAO <Cargo> {
             String read = null;
             while ((read = reader.readLine()) != null) {
                 String[] splitedLine = read.split(",");
-                String firstStr = new String(splitedLine[0]);
+                String firstStr = splitedLine[0];
 
-                if (firstStr.equals(firstStr)) {
+                if (firstStr.equalsIgnoreCase(firstStr)) {
                     cargo.setTypeCargo(splitedLine[0]);
                     cargo.setWeightCargo(Double.parseDouble(splitedLine[1]));
                     cargo.setVolumeCargo(Double.parseDouble(splitedLine[2]));
