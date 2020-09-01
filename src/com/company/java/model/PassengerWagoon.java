@@ -1,12 +1,17 @@
 package model;
 
-public class PassengerWagoon {
+import java.util.Objects;
+
+public class PassengerWagoon extends BaseEntity {
+
+    Long id = super.getId();
     TypeWagoon typeWagoon;  //тип вагона
     int numberWagoon;       //номер вагина
     int amountSeats;        //колличество мест в вагоне
     int numberSeats;        //номер места в вагоне
 
-    public PassengerWagoon(){  }
+    public PassengerWagoon() {
+    }
 
     public PassengerWagoon(TypeWagoon typeWagoon, int numberWagoon, int amountSeats, int numberSeats) {
         this.typeWagoon = typeWagoon;
@@ -14,8 +19,6 @@ public class PassengerWagoon {
         this.amountSeats = amountSeats;
         this.numberSeats = numberSeats;
     }
-
-
 
     public TypeWagoon getTypeWagoon() {
         return typeWagoon;
@@ -50,16 +53,39 @@ public class PassengerWagoon {
     }
 
     @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PassengerWagoon)) return false;
+        PassengerWagoon that = (PassengerWagoon) o;
+        return Objects.equals(getId(), that.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
+    }
+
+    @Override
     public String toString() {
         return "PassengerWagoon{" +
                 ", typeWagoon=" + typeWagoon +
                 ", numberWagoon=" + numberWagoon +
                 ", amountSeats=" + amountSeats +
                 ", numberSeats=" + numberSeats +
-                '}'+"\n";
+                '}' + "\n";
     }
 
-    public enum TypeWagoon{
+    public enum TypeWagoon {
         PLATSKART,
         KYPE,
         CW
