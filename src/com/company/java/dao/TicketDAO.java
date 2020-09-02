@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class TicketDAO implements GenericDAO<Ticket> {
-    String filePath = "src/com/resources/database_test/Passenger.txt";
+    String filePath = "src/com/resources/database_test/Ticket.txt";
 
     @Override
     public Ticket getEntityById(Long id) {
@@ -63,7 +63,7 @@ public class TicketDAO implements GenericDAO<Ticket> {
     }
 
     @Override
-    public void saveEntity(Ticket ticket)  {
+    public void saveEntity(Ticket ticket) {
         Ticket existTicket = getEntityById(ticket.getId());
 
 //        if (ticket.getId().equals(existTicket.getId()))
@@ -102,7 +102,7 @@ public class TicketDAO implements GenericDAO<Ticket> {
         int index = 0;
 
 
-        //получение списка пассажиров из файла
+        //получение списка билетов из файла
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String read = null;
             Date arriveBox = null;
@@ -132,7 +132,7 @@ public class TicketDAO implements GenericDAO<Ticket> {
                 //получение постели
                 boolean bedBox = splitedLine[4].equals("true");
 
-                list.add(new Ticket(Long.parseLong(splitedLine[0]), PassengerWagoon.TypeWagoon.valueOf(splitedLine[1]), arriveBox, departureBox, bedBox, Ticket.TeaCoffee.valueOf(splitedLine[5]),Ticket.Luggage.valueOf(splitedLine[6])));
+                list.add(new Ticket(Long.parseLong(splitedLine[0]), PassengerWagoon.TypeWagoon.valueOf(splitedLine[1]), arriveBox, departureBox, bedBox, Ticket.TeaCoffee.valueOf(splitedLine[5]), Ticket.Luggage.valueOf(splitedLine[6])));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -143,7 +143,7 @@ public class TicketDAO implements GenericDAO<Ticket> {
         //index = list.indexOf(entity);
 
         for (int i = 0; i < list.size(); i++) {
-            if (id == list.get(i).getId()){
+            if (id == list.get(i).getId()) {
                 index = i;
                 break;
             }
