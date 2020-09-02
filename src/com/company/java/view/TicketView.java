@@ -201,7 +201,7 @@ public class TicketView {
         try {
             long id = scan.nextLong();
             ticket = ticketController.getById(id);
-  //          if (ticket.getId() != null) {     не работает, почему???
+            //if (ticket.getId() != null) {    // не работает, почему???
             if (ticket != null){
                 System.out.println("This ticket find :" + ticket.toString());
             } else {

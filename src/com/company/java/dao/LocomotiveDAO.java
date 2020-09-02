@@ -44,7 +44,6 @@ public class LocomotiveDAO implements GenericDAO<Locomotive> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return locomotive;
     }
 

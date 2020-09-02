@@ -6,6 +6,7 @@ import model.Ticket;
 
 
 import java.io.*;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class TicketDAO implements GenericDAO<Ticket> {
                     ticket.setTypeWagoon(PassengerWagoon.TypeWagoon.valueOf(splitedLine[1]));
 
                     //получение даты прибытия
-                    SimpleDateFormat arrive = new SimpleDateFormat("dd/MM/yyyy in H:mm");
+                 DateFormat arrive = new SimpleDateFormat("dd/MM/yyyy in HH:mm");
                     String dateInStringArrive = splitedLine[2];
                     try {
                         ticket.setDateArrival(arrive.parse(dateInStringArrive));
@@ -38,7 +39,7 @@ public class TicketDAO implements GenericDAO<Ticket> {
                     }
 
                     //получения даты отправления
-                    SimpleDateFormat departure = new SimpleDateFormat("dd/MM/yyyy in H:mm");
+                    DateFormat departure = new SimpleDateFormat("dd/MM/yyyy in HH:mm");
                     String dateInStringDeparture = splitedLine[3];
                     try {
                         ticket.setDateArrival(departure.parse(dateInStringDeparture));
@@ -66,7 +67,7 @@ public class TicketDAO implements GenericDAO<Ticket> {
     public void saveEntity(Ticket ticket) {
         Ticket existTicket = getEntityById(ticket.getId());
 
-//        if (ticket.getId().equals(existTicket.getId()))
+        if (ticket.getId().equals(existTicket.getId()))
 
         if (!existTicket.equals(null)) {        // не могу заставить работать equals как в PassengerDAO ?????
             System.out.println("Passenger with such id = " + ticket.getId() + " is already existing");
