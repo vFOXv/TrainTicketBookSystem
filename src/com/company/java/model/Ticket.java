@@ -73,7 +73,7 @@ public class Ticket {
         this.dateDeparture = dateDeparture;
     }
 
-    public boolean bed() {
+    public boolean getBed() {
         return bed;
     }
 
