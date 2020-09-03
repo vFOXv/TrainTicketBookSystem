@@ -24,5 +24,4 @@ public class PassengerController {
         return passengerDAO.getEntityById(id);
     }
 
-
 }

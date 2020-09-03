@@ -1,5 +1,6 @@
 package model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -10,7 +11,7 @@ public class Ticket {
 
 //    private String name;                                // Имя пассажира
 //    private String surname;                             // Фамилия пассажира
-    private static long id;
+    private Long id;
     private PassengerWagoon.TypeWagoon typeWagoon;      // Тип вагона
     private Date dateArrival;                           // Дата прибытия
     private Date dateDeparture;                         // Дата отправления
@@ -22,11 +23,12 @@ public class Ticket {
     // Конструктор
     public Ticket() {
         passenger = new Passenger();
+        new SimpleDateFormat();
     }
 
     // Конструктор с параметрами
 
-    public Ticket(long id, PassengerWagoon.TypeWagoon typeWagoon, Date dateArrival,
+    public Ticket(Long id, PassengerWagoon.TypeWagoon typeWagoon, Date dateArrival,
                   Date dateDeparture, boolean bed, TeaCoffee drink, Luggage baggage) {
         passenger = new Passenger();
         this.id = id;
@@ -41,7 +43,7 @@ public class Ticket {
     // Геттеры и сеттеры на параметры класса Ticket
 
 
-    public static long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -73,7 +75,7 @@ public class Ticket {
         this.dateDeparture = dateDeparture;
     }
 
-    public boolean bed() {
+    public boolean getBed() {
         return bed;
     }
 

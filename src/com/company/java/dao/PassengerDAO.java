@@ -31,6 +31,7 @@ public class PassengerDAO implements GenericDAO<Passenger> {
 
     @Override
     public void saveEntity(Passenger passenger) {
+
         Passenger existPassenger = getEntityById(passenger.getIdTicket());
 
         if (passenger.getIdTicket().equals(existPassenger.getIdTicket())) {
