@@ -11,6 +11,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 public class TicketDAO implements GenericDAO<Ticket> {
     String filePath = "src/com/resources/database_test/Ticket.txt";
@@ -30,7 +31,7 @@ public class TicketDAO implements GenericDAO<Ticket> {
                     ticket.setTypeWagoon(PassengerWagoon.TypeWagoon.valueOf(splitedLine[1]));
 
                     //получение даты прибытия
-                 DateFormat arrive = new SimpleDateFormat("dd/MM/yyyy in HH:mm");
+                 DateFormat arrive = new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.ENGLISH);
                     String dateInStringArrive = splitedLine[2];
                     try {
                         ticket.setDateArrival(arrive.parse(dateInStringArrive));
@@ -39,7 +40,7 @@ public class TicketDAO implements GenericDAO<Ticket> {
                     }
 
                     //получения даты отправления
-                    DateFormat departure = new SimpleDateFormat("dd/MM/yyyy in HH:mm");
+                    DateFormat departure = new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.ENGLISH);
                     String dateInStringDeparture = splitedLine[3];
                     try {
                         ticket.setDateArrival(departure.parse(dateInStringDeparture));
@@ -67,9 +68,9 @@ public class TicketDAO implements GenericDAO<Ticket> {
     public void saveEntity(Ticket ticket) {
         Ticket existTicket = getEntityById(ticket.getId());
 
-        if (ticket.getId().equals(existTicket.getId()))
+//        if (ticket.getId().equals(existTicket.getId()))
 
-        if (!existTicket.equals(null)) {        // не могу заставить работать equals как в PassengerDAO ?????
+        if (false/*!existTicket.equals(null)*/) {        // не могу заставить работать equals как в PassengerDAO ?????
             System.out.println("Passenger with such id = " + ticket.getId() + " is already existing");
         } else {
             String passengerToString = ticket.getId() + ","
@@ -113,7 +114,7 @@ public class TicketDAO implements GenericDAO<Ticket> {
                 splitedLine = read.split(",");
 
                 //получение даты прибытия
-                SimpleDateFormat arrive = new SimpleDateFormat("dd/MM/yyyy in H:mm");
+                SimpleDateFormat arrive = new SimpleDateFormat("dd.MM.yyyy HH:mm");
                 String dateInStringArrive = splitedLine[2];
                 try {
                     arriveBox = arrive.parse(dateInStringArrive);
@@ -122,7 +123,7 @@ public class TicketDAO implements GenericDAO<Ticket> {
                 }
 
                 //получения даты отправления
-                SimpleDateFormat departure = new SimpleDateFormat("dd/MM/yyyy in H:mm");
+                SimpleDateFormat departure = new SimpleDateFormat("dd.MM.yyyy HH:mm");
                 String dateInStringDeparture = splitedLine[3];
                 try {
                     departureBox = departure.parse(dateInStringDeparture);
